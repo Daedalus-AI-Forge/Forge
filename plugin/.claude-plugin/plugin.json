@@ -1,0 +1,6 @@
+{
+  "name": "forge",
+  "description": "Discover previous sessions, fork them into named background workers, and merge their results back into your session.",
+  "version": "0.1.0",
+  "author": { "name": "Daedalus Forge" }
+}
