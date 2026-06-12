@@ -14723,6 +14723,7 @@ function inspectSession(sessionId, scope, cwd, n = 5) {
 
 // src/spawner.ts
 var import_node_child_process = require("node:child_process");
+var import_node_crypto = require("node:crypto");
 var import_node_path4 = __toESM(require("node:path"), 1);
 
 // src/store.ts
@@ -14799,7 +14800,7 @@ function slugify2(s) {
 }
 function spawnWorker(req, deps) {
   const slug = slugify2(req.workerName ?? req.taskPrompt) || "task";
-  const workerId = `${slug}-${Date.now().toString(36)}`;
+  const workerId = `${slug}-${Date.now().toString(36)}-${(0, import_node_crypto.randomBytes)(3).toString("hex")}`;
   const workerName = `forge-worker: ${slug}`;
   writeSpec(WorkerSpec.parse({
     workerId,

@@ -42,4 +42,11 @@ describe('spawnWorker', () => {
     expect(spec.maxTurns).toBe(10)
     expect(spec.model).toBe('claude-haiku-4-5-20251001')
   })
+
+  it('generates unique workerIds for identical simultaneous requests', () => {
+    const deps: SpawnDeps = { launchDetached: () => 1 }
+    const a = spawnWorker({ sourceSessionId: 's', taskPrompt: 'same task', cwd: '/tmp/p' }, deps)
+    const b = spawnWorker({ sourceSessionId: 's', taskPrompt: 'same task', cwd: '/tmp/p' }, deps)
+    expect(a.workerId).not.toBe(b.workerId)
+  })
 })

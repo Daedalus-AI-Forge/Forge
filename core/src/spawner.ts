@@ -1,4 +1,5 @@
 import { spawn } from 'node:child_process'
+import { randomBytes } from 'node:crypto'
 import path from 'node:path'
 import { WorkerSpec } from './contracts.js'
 import { writeSpec } from './store.js'
@@ -24,7 +25,7 @@ export function slugify(s: string): string {
 
 export function spawnWorker(req: SpawnRequest, deps: SpawnDeps): { workerId: string; workerName: string } {
   const slug = slugify(req.workerName ?? req.taskPrompt) || 'task'
-  const workerId = `${slug}-${Date.now().toString(36)}`
+  const workerId = `${slug}-${Date.now().toString(36)}-${randomBytes(3).toString('hex')}`
   const workerName = `forge-worker: ${slug}`
   writeSpec(WorkerSpec.parse({
     workerId, workerName,
