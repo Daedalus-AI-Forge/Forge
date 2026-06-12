@@ -91,3 +91,42 @@ export function listSessions(scope: Scope, cwd: string): SessionMeta[] {
   }
   return out.sort((a, b) => b.modifiedAt.localeCompare(a.modifiedAt))
 }
+
+export interface SearchHit { meta: SessionMeta; matches: string[] }
+
+export function searchSessions(
+  query: string, scope: Scope, cwd: string, maxResults = 10,
+): SearchHit[] {
+  const q = query.toLowerCase()
+  const hits: SearchHit[] = []
+  for (const meta of listSessions(scope, cwd)) {
+    const matches: string[] = []
+    for (const r of records(meta.filePath)) {
+      if (!isMainMessage(r)) continue
+      const text = extractText(r.message!.content)
+      const idx = text.toLowerCase().indexOf(q)
+      if (idx >= 0 && matches.length < 3) {
+        matches.push(text.slice(Math.max(0, idx - 60), idx + q.length + 60))
+      }
+    }
+    if (matches.length) hits.push({ meta, matches })
+    if (hits.length >= maxResults) break
+  }
+  return hits
+}
+
+export interface SessionView { meta: SessionMeta; head: string[]; tail: string[] }
+
+export function inspectSession(
+  sessionId: string, scope: Scope, cwd: string, n = 5,
+): SessionView | null {
+  const meta = listSessions(scope, cwd).find(m => m.sessionId === sessionId)
+  if (!meta) return null
+  const texts: string[] = []
+  for (const r of records(meta.filePath)) {
+    if (!isMainMessage(r)) continue
+    const text = extractText(r.message!.content)
+    if (text) texts.push(`[${r.type}] ${text.slice(0, 300)}`)
+  }
+  return { meta, head: texts.slice(0, n), tail: texts.slice(-n) }
+}
