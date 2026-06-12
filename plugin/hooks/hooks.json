@@ -4,7 +4,7 @@
       {
         "matcher": "startup|clear|compact",
         "hooks": [
-          { "type": "command", "command": "node ${CLAUDE_PLUGIN_ROOT}/dist/session-start.cjs" }
+          { "type": "command", "command": "node ${CLAUDE_PLUGIN_ROOT}/dist/session-start.cjs", "async": false }
         ]
       }
     ]
