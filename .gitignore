@@ -24,6 +24,8 @@ docs/
 **/*.py[cod]
 **/*.egg-info/
 **/dist/
+!plugin/dist/
+!plugin/dist/**
 **/build/
 **/node_modules/
 .DS_Store
