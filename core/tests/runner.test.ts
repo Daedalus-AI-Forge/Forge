@@ -1,6 +1,10 @@
-import { describe, it, expect } from 'vitest'
-import { wrapTaskPrompt, extractContract } from '../src/runner.js'
+import fs from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
+import { describe, it, expect, beforeEach } from 'vitest'
+import { wrapTaskPrompt, extractContract, runWorker, type RunnerDeps } from '../src/runner.js'
 import type { WorkerSpec } from '../src/contracts.js'
+import { readStatus, readResult, writeSpec } from '../src/store.js'
 
 const spec: WorkerSpec = {
   workerId: 'w1', workerName: 'forge-worker: login-page', sourceSessionId: 'src-1',
@@ -40,5 +44,64 @@ describe('extractContract', () => {
     const r = extractContract(spec, 'I finished but forgot the format, sorry.')
     expect(r.outcome).toBe('partial')
     expect(r.summary).toContain('forgot the format')
+  })
+})
+
+function deps(messages: any[], overrides: Partial<RunnerDeps> = {}): RunnerDeps {
+  return {
+    queryFn: async function* () { for (const m of messages) yield m },
+    renameFn: async () => {},
+    gitDiffStat: () => undefined,
+    now: () => new Date().toISOString(),
+    ...overrides,
+  }
+}
+
+const sdkRun = [
+  { type: 'system', subtype: 'init', session_id: 'forked-123' },
+  { type: 'assistant', message: { content: [{ type: 'text', text: 'working...' }] } },
+  { type: 'assistant', message: { content: [{ type: 'text',
+      text: '{"outcome":"completed","summary":"login page done","artifacts":["src/login.tsx"]}' }] } },
+  { type: 'result', result: '{"outcome":"completed","summary":"login page done","artifacts":["src/login.tsx"]}' },
+]
+
+describe('runWorker', () => {
+  beforeEach(() => {
+    process.env.FORGE_HOME = fs.mkdtempSync(path.join(os.tmpdir(), 'forge-run-'))
+    writeSpec(spec)
+  })
+
+  it('happy path: records forked id, renames, writes done status + contract', async () => {
+    const renamed: string[] = []
+    await runWorker(spec, deps(sdkRun, {
+      renameFn: async (id, name) => { renamed.push(`${id}=${name}`) },
+    }))
+    expect(renamed).toEqual(['forked-123=forge-worker: login-page'])
+    const status = readStatus('w1')!
+    expect(status.state).toBe('done')
+    expect(status.forkedSessionId).toBe('forked-123')
+    expect(readResult('w1')!.summary).toBe('login page done')
+  })
+
+  it('includes git diff stat when available', async () => {
+    await runWorker(spec, deps(sdkRun, { gitDiffStat: () => ' 1 file changed' }))
+    expect(readResult('w1')!.diffs).toBe(' 1 file changed')
+  })
+
+  it('query throwing → failed status with failure contract', async () => {
+    await runWorker(spec, deps([], {
+      queryFn: async function* () { throw new Error('SDK exploded') },
+    }))
+    expect(readStatus('w1')!.state).toBe('failed')
+    const r = readResult('w1')!
+    expect(r.outcome).toBe('failed')
+    expect(r.summary).toContain('SDK exploded')
+  })
+
+  it('rename failure does not fail the run', async () => {
+    await runWorker(spec, deps(sdkRun, {
+      renameFn: async () => { throw new Error('no rename API') },
+    }))
+    expect(readStatus('w1')!.state).toBe('done')
   })
 })
