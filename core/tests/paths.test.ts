@@ -20,7 +20,7 @@ describe('paths', () => {
   })
 
   it('encodes cwd like Claude Code does (non-alphanumerics → dash)', () => {
-    expect(encodeProjectDir('/Users/darren/Documents/daedalus-ai-forge/Forge'))
-      .toBe('-Users-darren-Documents-daedalus-ai-forge-Forge')
+    expect(encodeProjectDir('/home/user/my_repos/some.project'))
+      .toBe('-home-user-my-repos-some-project')
   })
 })
