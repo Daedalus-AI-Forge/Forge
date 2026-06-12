@@ -1,0 +1,11 @@
+{
+  "name": "forge",
+  "owner": { "name": "Daedalus Forge" },
+  "plugins": [
+    {
+      "name": "forge",
+      "source": "./plugin",
+      "description": "Discover previous sessions, fork them into named background workers, and merge their results back into your session."
+    }
+  ]
+}
