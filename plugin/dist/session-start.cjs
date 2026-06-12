@@ -27,6 +27,10 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
+// scripts/import-meta-url-shim.mjs
+var import_node_url = require("node:url");
+var __forgeImportMetaUrl = (0, import_node_url.pathToFileURL)(__filename).href;
+
 // src/store.ts
 var import_node_fs = __toESM(require("node:fs"), 1);
 var import_node_path2 = __toESM(require("node:path"), 1);

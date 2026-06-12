@@ -9,6 +9,20 @@ if (!workerId) { console.error('usage: worker-run <workerId>'); process.exit(2) 
 const spec = readSpec(workerId)
 if (!spec) { console.error(`no spec for worker ${workerId}`); process.exit(2) }
 
+// The runner is shipped as a standalone esbuild CJS bundle in plugin/dist with no
+// adjacent node_modules, so the SDK cannot resolve its own native CLI binary
+// (createRequire on the bundle path fails). Point it at an executable explicitly:
+// an override env var, else the `claude` already on PATH (the locally-authed CLI).
+function resolveClaudeExecutable(): string | undefined {
+  if (process.env.CLAUDE_CODE_PATH) return process.env.CLAUDE_CODE_PATH
+  try {
+    return execFileSync('/bin/sh', ['-c', 'command -v claude'], { encoding: 'utf8' }).trim() || undefined
+  } catch {
+    return undefined
+  }
+}
+const pathToClaudeCodeExecutable = resolveClaudeExecutable()
+
 const deps: RunnerDeps = {
   queryFn: (s: WorkerSpec, prompt: string) => query({
     prompt,
@@ -18,6 +32,7 @@ const deps: RunnerDeps = {
       cwd: s.cwd,
       permissionMode: s.permissionMode,
       maxTurns: s.maxTurns,
+      ...(pathToClaudeCodeExecutable ? { pathToClaudeCodeExecutable } : {}),
       ...(s.model ? { model: s.model } : {}),
     },
   }) as AsyncIterable<any>,

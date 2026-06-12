@@ -30,6 +30,16 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
+// scripts/import-meta-url-shim.mjs
+var import_node_url, __forgeImportMetaUrl;
+var init_import_meta_url_shim = __esm({
+  "scripts/import-meta-url-shim.mjs"() {
+    "use strict";
+    import_node_url = require("node:url");
+    __forgeImportMetaUrl = (0, import_node_url.pathToFileURL)(__filename).href;
+  }
+});
+
 // node_modules/@anthropic-ai/claude-agent-sdk/sdk.mjs
 var sdk_exports = {};
 __export(sdk_exports, {
@@ -6189,7 +6199,7 @@ function Qx(e, t, r, o) {
   if ($r && u.spawnClaudeCodeProcess) ee("sessionStore with custom spawnClaudeCodeProcess: ensure the subprocess CLAUDE_CONFIG_DIR matches the parent (same path, same separators) or transcript_mirror frames will be dropped.", { level: "warn" });
   let vg = u.pathToClaudeCodeExecutable;
   if (!vg) {
-    let $t = (0, import_url.fileURLToPath)(import_meta.url), nr = (0, import_module.createRequire)($t), eo = jT((Jo) => nr.resolve(Jo));
+    let $t = (0, import_url.fileURLToPath)(__forgeImportMetaUrl), nr = (0, import_module.createRequire)($t), eo = jT((Jo) => nr.resolve(Jo));
     if (!eo) throw Error(`Native CLI binary for ${process.platform}-${process.arch} not found. Reinstall @anthropic-ai/claude-agent-sdk without --omit=optional, or set options.pathToClaudeCodeExecutable.`);
     vg = eo;
   }
@@ -6584,9 +6594,10 @@ function VU(e, t) {
   }
   return null;
 }
-var import_node_module, import_child_process, import_crypto, import_fs, import_promises, import_module, import_os, import_path, import_readline, import_url, import_events, import_fs2, import_path2, import_child_process2, import_fs3, import_readline2, import_os2, import_path3, import_crypto2, import_path4, import_async_hooks, import_promises2, import_crypto3, import_promises3, import_fs4, import_process, import_crypto4, import_promises4, import_path5, Y, import_promises5, import_fs5, import_promises6, import_events2, import_fs6, import_promises7, import_path6, import_child_process3, import_util, import_child_process4, import_path7, import_promises8, import_path8, import_fs7, import_promises9, import_path9, import_crypto5, import_path10, import_promises10, import_path11, import_crypto6, import_os3, import_path12, import_path13, import_path14, import_node_path, import_node_os, import_node_process, import_path15, import_promises11, import_os4, import_path16, import_path17, import_os5, import_path18, import_child_process5, import_fs8, import_meta, yz, bz, kg, _z, vz, xz, wz, Eg, k, kz, xr, At, Pz, Iz, _e, ve, BT, HT, qT, Uh, XT, yo, nP, Sd, aP, bo, fP, hP, Fh, Ka, kP, Xh, NP, Qh, BP, Ja, oy, kd, Ed, ay, Td, uy, dy, bI, py, wI, EI, PI, $I, jI, LI, HI, VI, GI, QI, rR, sR, uR, gR, bR, kR, PR, DR, Rl, SS, re, ue, tn, Al, _O, RS, $S, Ol, MO, er, HO, WO, jS, JO, Cl, Nl, Cm, jl, Dm, TC, KS, jC, HC, VC, eM, rM, cM, uM, pM, mM, yM, _M, SM, wM, EM, PM, Zm, AM, CM, DM, jM, nx, ox, VM, GM, XM, nD, sD, sx, dD, hD, bD, vD, xD, kD, ID, $D, OD, MD, ND, zD, BD, VD, GD, JD, ux, aN, lN, fN, $z, Xo, Mz, Dz, Nz, jz, Uz, Pg, ot, Hz, _u, qz, Zz, Bt, Vz, Ht, xw, Wz, Kz, Zs, ww, Jz, Xz, kw, Qz, eL, Ew, wr, Qe, nL, oL, iL, sL, Yo, cL, vu, Tw, Pw, uL, dL, Iw, fL, mL, gL, hL, yL, bL, _L, Rw, $w, Qo, wL, Cr, Aw, Ow, TL, PL, IL, Cw, $L, AL, Mw, CL, Dw, Ig, Nw, dn, pn, UL, zL, jw, Uw, zw, Lw, fn, qL, Su, Fw, Bw, mn, Hw, qw, Zw, Vw, Vs, YL, Ce, qt, bie, $g, Ws, z, We, et, to, Ks, Gs, Js, Xs, Ys, Qs, ea, ta, ra, r1, Ww, Ag, Og, Gw, wu, Jw, Zt, ek, o1, Xw, Yw, Qw, na, nk, sk, ak, Eu, ro, ck, lk, ni, uk, ik, Dg, c1, he, Ng, ge, dk, pk, Au, Ug, u1, mk, Dr, Ou, d1, hk, yk, zg, p1, bk, Ot, Ct, gn, sa, Mt, kk, aa, no, Mu, Hg, Du, ir, ye, Zg, Vg, ii, Ek, x1, w1, qg, Tk, k1, E1, J, Pk, E, Ik, R1, M, la, ua, da, pa, fa, ma, si, ga, ha, io, ai, ya, zu, F1, ci, B1, H1, Lu, Vt, hn, li, ba, Fu, _a, va, Bu, Sa, Nr, xa, Hu, qu, so, Zu, Vu, wa, Xg, Ok, Wu, Yg, Qg, eh, Ck, Mk, ka, ui, jk, Uk, Ea, di, ao, Ke, _t, Dt, jr, yn, Ta, zk, th, Pa, Fk, Z1, bn, Ia, Ra, co, $a, pi, Aa, fi, it, mi, Wt, _n, gi, Oa, Ku, Ca, Ma, Gu, Da, Ur, Na, Ju, Xu, lo, Yu, Qu, ja, oh, qk, ih, sh, ah, ch, Zk, Vk, Ua, za, uo, Gk, rF, hi, lh, uh, ed, Jk, Xk, Yk, Ue, po, lF, uF, iE, yF, fo, _i, lE, uE, dE, pE, wF, fE, mE, EF, Si, xi, PF, IF, td, gE, hE, Kt, CF, gh, yE, DF, NF, jF, Lr, UF, dt, nd, bE, SE, _E, LF, vE, FF, BF, La, HF, qF, vn, VF, wi, KF, GF, JF, XF, YF, QF, e4, t4, r4, n4, o4, i4, s4, a4, c4, l4, u4, d4, p4, f4, m4, g4, h4, y4, $e, xE, wE, id, kE, Fa, v4, hh, S4, sd, EE, x4, ad, w4, k4, TE, T4, cd, PE, ki, IE, A4, O4, RE, ld, dd, CE, $E, D4, AE, OE, yh, ME, DE, z4, pd, L4, bh, NE, jE, UE, H4, zE, LE, Z4, Ei, W4, K4, FE, J4, BE, Y4, Q4, e2, HE, qE, r2, ZE, VE, KE, GE, Sn, i2, Ti, JE, XE, YE, QE, fd, _h, md, p2, f2, m2, g2, h2, vh, y2, cT, Ofe, Cfe, _2, S2, x2, w2, Hfe, k2, qfe, E2, Zfe, T2, Vfe, P2, Wfe, pT, R2, mT, L2, F2, lme, ume, H2, _T, xT, q2, vT, Z2, V2, ST, Ph, X2, Y2, Ih, Q2, IT, RT, tB, rB, hd, kh, Ha, Eh, Rh, CT, Ome, iB, Pe, Ze, dB, bd, NT, Oh, Pi, qa, _B, Dh, zT, Nh, _d, vd, SB, jh, bg, Ay, Bq, Wq, ar, Xq, Mi, e6, FR, t6, Rd, n6, Ya, o6, i6, v6, $6, z6, f0, L6, F6, B6, Kye, p0, H6, Z6, g0, K6, ae, b0, C, Hr, I, Nt, G6, En, J6, Dd, st, W, ji, pt, qy, Zy, xo, rc, F, lr, _0, oe, X6, Y6, Q6, eZ, tZ, rZ, nZ, oZ, iZ, Vy, sZ, aZ, cZ, lZ, uZ, dZ, v0, pZ, Zr, zi, Li, Nd, oc, jd, ic, sc, Ud, wo, Vr, zd, Er, ze, ac, qr, Ky, cc, Wr, Ld, Fd, Fi, nc, lc, uc, ko, dc, Bi, Tr, Gt, Tn, pc, fc, Bd, _be, Gy, Hd, mc, vbe, R, Sbe, xbe, wbe, kbe, Ebe, Tbe, Pbe, Ibe, Rbe, $be, Abe, Obe, Cbe, Mbe, w0, Dbe, Nbe, jbe, Ube, zbe, Lbe, Fbe, Bbe, Hbe, qbe, Zbe, Vbe, Wbe, Kbe, Gbe, Jbe, Xbe, Ybe, Qbe, ur, qd, Zd, Kr, gc, A, Vd, eb, IZ, vc, tb, nb, ob, k0, E0, wc, Zi, Gd, Po, Jd, Io, Xd, In, Yd, Rn, $n, sb, ab, cb, lb, ub, db, pb, UZ, fb, Ro, zZ, LZ, FZ, mb, BZ, HZ, qZ, ZZ, VZ, hb, yb, bb, _b, vb, Qd, Sb, WZ, xb, P0, wb, Tb, Pb, Ib, Rb, $b, Ab, Ob, Cb, Mb, Me, $0, ep, tp, Db, Nb, jb, Ub, zb, Lb, Fb, Bb, Hb, Ki, qb, Zb, Vb, Wb, Kb, Gb, Jb, Xb, Yb, rp, Qb, G, An, xe, ip, sp, ap, cp, lp, up, dp, pp, fp, mp, gp, t_, r_, n_, o_, hp, yp, bp, _p, vp, Sp, xp, wp, kp, kc, Ep, Gi, Ec, Tp, Pp, Ip, Rp, $p, $o, Ap, Op, Cp, Ji, Tc, Pc, Mp, Dp, On, Np, jp, Up, zp, Lp, Fp, Xi, Bp, Hp, qp, Zp, Vp, Wp, Kp, Gp, Yi, Jp, Xp, Yp, Qp, ef, Qi, KZ, GZ, JZ, XZ, YZ, QZ, eV, tV, rV, nV, oV, iV, sV, aV, cV, lV, uV, dV, pV, fV, mV, gV, hV, yV, bV, _V, vV, SV, xV, wV, kV, EV, TV, PV, IV, RV, $V, AV, OV, CV, MV, DV, tf, rf, Rc, kt, of, iv, $f, K0, oW, iW, l, ss, Mf, Df, Nf, jf, Y0, cW, as, dv, pv, fv, mv, ne, hv, pl, Ie, yv, Uf, Qr, bv, _v, vv, Sv, xv, wv, kv, Ev, Tv, Pv, Iv, Rv, $v, Av, Ov, Cv, Q0, fl, cs, ml, gl, Mv, e$, t$, r$, n$, o$, i$, s$, Hf, a$, qf, Dv, c$, l$, u$, Nv, d$, p$, dl, f$, m$, jv, zv, g$, h$, b$, Lv, S$, x$, k$, Fv, E$, P$, I$, $$, Vf, iK, aK, Hv, M$, qv, Zv, D$, Nn, Gf, Xe, N$, j$, $Se, hK, yK, Vv, Ut, yl, U$, tt, Yt, Qt, rt, Jf, z$, Wv, L$, F$, Kv, bl, Z, Gv, B$, ASe, OSe, Xf, bK, Yf, _K, _l, ls, H$, vK, SK, xK, wK, kK, EK, Jv, TK, PK, Xv, Qf, IK, RK, em, $K, vl, Sl, AK, xl, us, OK, wl, tm, rm, nm, CSe, om, im, sm, q$, Z$, V$, Yv, W$, kl, ds, K$, CK, am, MK, cm, DK, Qv, NK, lm, jK, UK, zK, LK, FK, BK, HK, qK, ZK, VK, um, WK, KK, dm, eS, tS, rS, GK, JK, XK, nS, YK, QK, eG, tG, rG, G$, pm, nG, fm, MSe, oG, ps, iG, DSe, El, sG, oS, aG, cG, lG, uG, dG, pG, fG, Kf, mG, gG, hG, Tl, iS, yG, bG, _G, vG, SG, xG, wG, kG, EG, TG, PG, IG, RG, $G, AG, OG, CG, MG, fs, DG, NG, jG, mm, UG, zG, LG, sS, FG, NSe, jSe, USe, zSe, LSe, FSe, H, Y$, eA, Q$, tA, rA, gm, sA, BG, HG, lS, dr, qG, Pl, yA, xA, wA, RA, $A, KG, GG, dS, XG, gS, mN, gN, vx, Sx, xx, _N, bN, vQ, Ex, Px, wQ, Xl, EN, IQ, _r, PN, IN, jQ, UQ, $N, AN, ON, CN, Vn, Rx, Ps, ZQ, VQ, WQ, JPe, GQ, Ax, XQ, NN, SIe, Is, UN, Ox, zN, ng, jN, YQ, wIe, Wn, LN, Ql, Rs, og, QQ, BN, $s, Ho, WIe, KIe, GIe, qo, eRe, eu, ZN, oee, VN, WN, see, aee, cee, KN, lee, uee, GN, tu, JN, XN, QN, ej, tj, ig, rj, bee, nj, _ee, vee, See, oj, wee, sg, ij, sj, aj, Pee, on, cj, lj, uj, dj, pj, mj, gj, hj, Mee, ag, Nee, Cx, jee, _j, vj, ru, nu, Kn, Sj, xj, wj, Mx, As, Fee, Bee, Tj, Pj, Ij, Rj, Hee, $j, u$e, ou, qee, Aj, b$e, _$e, Oj, iu, Cj, Mj, Zo, R$e, $$e, Os, Gn, Vee, Wee, Dj, Kee, Gee, Jee, Xee, Yee, Qee, Dx, ete, lg, A$e, tte, rte, zj, nte, ote, vr, Vo, Nj, jx, Ux, Lj, zx, ste, z$e, ate, cte, lte, ute, dte, Fj, Bj, pte, jj, fte, mte, Hj, gte, hte, Uj, yte, bte, qj, _te, Zj, vte, Ste, xte, su, Nx, Vj, wte, kte, Ete, Tte, Pte, L$e, Wj, Rte, $te, Ate, Ote, Cte, Mte, Dte, F$e, Nte, B$e, jte, au, ug, Xj, Yj, Q$e, eAe, dg, Zx, iU, Bte, SAe, Hte, pg, fg, qte, aU, Wo, cU, an, Zte, Vte, UAe, Gte, Xte, Kx, gre, Yn, CU, MU, DU, hg, Sre, LU, xre, wre, kre, zre;
+var import_node_module, import_child_process, import_crypto, import_fs, import_promises, import_module, import_os, import_path, import_readline, import_url, import_events, import_fs2, import_path2, import_child_process2, import_fs3, import_readline2, import_os2, import_path3, import_crypto2, import_path4, import_async_hooks, import_promises2, import_crypto3, import_promises3, import_fs4, import_process, import_crypto4, import_promises4, import_path5, Y, import_promises5, import_fs5, import_promises6, import_events2, import_fs6, import_promises7, import_path6, import_child_process3, import_util, import_child_process4, import_path7, import_promises8, import_path8, import_fs7, import_promises9, import_path9, import_crypto5, import_path10, import_promises10, import_path11, import_crypto6, import_os3, import_path12, import_path13, import_path14, import_node_path, import_node_os, import_node_process, import_path15, import_promises11, import_os4, import_path16, import_path17, import_os5, import_path18, import_child_process5, import_fs8, yz, bz, kg, _z, vz, xz, wz, Eg, k, kz, xr, At, Pz, Iz, _e, ve, BT, HT, qT, Uh, XT, yo, nP, Sd, aP, bo, fP, hP, Fh, Ka, kP, Xh, NP, Qh, BP, Ja, oy, kd, Ed, ay, Td, uy, dy, bI, py, wI, EI, PI, $I, jI, LI, HI, VI, GI, QI, rR, sR, uR, gR, bR, kR, PR, DR, Rl, SS, re, ue, tn, Al, _O, RS, $S, Ol, MO, er, HO, WO, jS, JO, Cl, Nl, Cm, jl, Dm, TC, KS, jC, HC, VC, eM, rM, cM, uM, pM, mM, yM, _M, SM, wM, EM, PM, Zm, AM, CM, DM, jM, nx, ox, VM, GM, XM, nD, sD, sx, dD, hD, bD, vD, xD, kD, ID, $D, OD, MD, ND, zD, BD, VD, GD, JD, ux, aN, lN, fN, $z, Xo, Mz, Dz, Nz, jz, Uz, Pg, ot, Hz, _u, qz, Zz, Bt, Vz, Ht, xw, Wz, Kz, Zs, ww, Jz, Xz, kw, Qz, eL, Ew, wr, Qe, nL, oL, iL, sL, Yo, cL, vu, Tw, Pw, uL, dL, Iw, fL, mL, gL, hL, yL, bL, _L, Rw, $w, Qo, wL, Cr, Aw, Ow, TL, PL, IL, Cw, $L, AL, Mw, CL, Dw, Ig, Nw, dn, pn, UL, zL, jw, Uw, zw, Lw, fn, qL, Su, Fw, Bw, mn, Hw, qw, Zw, Vw, Vs, YL, Ce, qt, bie, $g, Ws, z, We, et, to, Ks, Gs, Js, Xs, Ys, Qs, ea, ta, ra, r1, Ww, Ag, Og, Gw, wu, Jw, Zt, ek, o1, Xw, Yw, Qw, na, nk, sk, ak, Eu, ro, ck, lk, ni, uk, ik, Dg, c1, he, Ng, ge, dk, pk, Au, Ug, u1, mk, Dr, Ou, d1, hk, yk, zg, p1, bk, Ot, Ct, gn, sa, Mt, kk, aa, no, Mu, Hg, Du, ir, ye, Zg, Vg, ii, Ek, x1, w1, qg, Tk, k1, E1, J, Pk, E, Ik, R1, M, la, ua, da, pa, fa, ma, si, ga, ha, io, ai, ya, zu, F1, ci, B1, H1, Lu, Vt, hn, li, ba, Fu, _a, va, Bu, Sa, Nr, xa, Hu, qu, so, Zu, Vu, wa, Xg, Ok, Wu, Yg, Qg, eh, Ck, Mk, ka, ui, jk, Uk, Ea, di, ao, Ke, _t, Dt, jr, yn, Ta, zk, th, Pa, Fk, Z1, bn, Ia, Ra, co, $a, pi, Aa, fi, it, mi, Wt, _n, gi, Oa, Ku, Ca, Ma, Gu, Da, Ur, Na, Ju, Xu, lo, Yu, Qu, ja, oh, qk, ih, sh, ah, ch, Zk, Vk, Ua, za, uo, Gk, rF, hi, lh, uh, ed, Jk, Xk, Yk, Ue, po, lF, uF, iE, yF, fo, _i, lE, uE, dE, pE, wF, fE, mE, EF, Si, xi, PF, IF, td, gE, hE, Kt, CF, gh, yE, DF, NF, jF, Lr, UF, dt, nd, bE, SE, _E, LF, vE, FF, BF, La, HF, qF, vn, VF, wi, KF, GF, JF, XF, YF, QF, e4, t4, r4, n4, o4, i4, s4, a4, c4, l4, u4, d4, p4, f4, m4, g4, h4, y4, $e, xE, wE, id, kE, Fa, v4, hh, S4, sd, EE, x4, ad, w4, k4, TE, T4, cd, PE, ki, IE, A4, O4, RE, ld, dd, CE, $E, D4, AE, OE, yh, ME, DE, z4, pd, L4, bh, NE, jE, UE, H4, zE, LE, Z4, Ei, W4, K4, FE, J4, BE, Y4, Q4, e2, HE, qE, r2, ZE, VE, KE, GE, Sn, i2, Ti, JE, XE, YE, QE, fd, _h, md, p2, f2, m2, g2, h2, vh, y2, cT, Ofe, Cfe, _2, S2, x2, w2, Hfe, k2, qfe, E2, Zfe, T2, Vfe, P2, Wfe, pT, R2, mT, L2, F2, lme, ume, H2, _T, xT, q2, vT, Z2, V2, ST, Ph, X2, Y2, Ih, Q2, IT, RT, tB, rB, hd, kh, Ha, Eh, Rh, CT, Ome, iB, Pe, Ze, dB, bd, NT, Oh, Pi, qa, _B, Dh, zT, Nh, _d, vd, SB, jh, bg, Ay, Bq, Wq, ar, Xq, Mi, e6, FR, t6, Rd, n6, Ya, o6, i6, v6, $6, z6, f0, L6, F6, B6, Kye, p0, H6, Z6, g0, K6, ae, b0, C, Hr, I, Nt, G6, En, J6, Dd, st, W, ji, pt, qy, Zy, xo, rc, F, lr, _0, oe, X6, Y6, Q6, eZ, tZ, rZ, nZ, oZ, iZ, Vy, sZ, aZ, cZ, lZ, uZ, dZ, v0, pZ, Zr, zi, Li, Nd, oc, jd, ic, sc, Ud, wo, Vr, zd, Er, ze, ac, qr, Ky, cc, Wr, Ld, Fd, Fi, nc, lc, uc, ko, dc, Bi, Tr, Gt, Tn, pc, fc, Bd, _be, Gy, Hd, mc, vbe, R, Sbe, xbe, wbe, kbe, Ebe, Tbe, Pbe, Ibe, Rbe, $be, Abe, Obe, Cbe, Mbe, w0, Dbe, Nbe, jbe, Ube, zbe, Lbe, Fbe, Bbe, Hbe, qbe, Zbe, Vbe, Wbe, Kbe, Gbe, Jbe, Xbe, Ybe, Qbe, ur, qd, Zd, Kr, gc, A, Vd, eb, IZ, vc, tb, nb, ob, k0, E0, wc, Zi, Gd, Po, Jd, Io, Xd, In, Yd, Rn, $n, sb, ab, cb, lb, ub, db, pb, UZ, fb, Ro, zZ, LZ, FZ, mb, BZ, HZ, qZ, ZZ, VZ, hb, yb, bb, _b, vb, Qd, Sb, WZ, xb, P0, wb, Tb, Pb, Ib, Rb, $b, Ab, Ob, Cb, Mb, Me, $0, ep, tp, Db, Nb, jb, Ub, zb, Lb, Fb, Bb, Hb, Ki, qb, Zb, Vb, Wb, Kb, Gb, Jb, Xb, Yb, rp, Qb, G, An, xe, ip, sp, ap, cp, lp, up, dp, pp, fp, mp, gp, t_, r_, n_, o_, hp, yp, bp, _p, vp, Sp, xp, wp, kp, kc, Ep, Gi, Ec, Tp, Pp, Ip, Rp, $p, $o, Ap, Op, Cp, Ji, Tc, Pc, Mp, Dp, On, Np, jp, Up, zp, Lp, Fp, Xi, Bp, Hp, qp, Zp, Vp, Wp, Kp, Gp, Yi, Jp, Xp, Yp, Qp, ef, Qi, KZ, GZ, JZ, XZ, YZ, QZ, eV, tV, rV, nV, oV, iV, sV, aV, cV, lV, uV, dV, pV, fV, mV, gV, hV, yV, bV, _V, vV, SV, xV, wV, kV, EV, TV, PV, IV, RV, $V, AV, OV, CV, MV, DV, tf, rf, Rc, kt, of, iv, $f, K0, oW, iW, l, ss, Mf, Df, Nf, jf, Y0, cW, as, dv, pv, fv, mv, ne, hv, pl, Ie, yv, Uf, Qr, bv, _v, vv, Sv, xv, wv, kv, Ev, Tv, Pv, Iv, Rv, $v, Av, Ov, Cv, Q0, fl, cs, ml, gl, Mv, e$, t$, r$, n$, o$, i$, s$, Hf, a$, qf, Dv, c$, l$, u$, Nv, d$, p$, dl, f$, m$, jv, zv, g$, h$, b$, Lv, S$, x$, k$, Fv, E$, P$, I$, $$, Vf, iK, aK, Hv, M$, qv, Zv, D$, Nn, Gf, Xe, N$, j$, $Se, hK, yK, Vv, Ut, yl, U$, tt, Yt, Qt, rt, Jf, z$, Wv, L$, F$, Kv, bl, Z, Gv, B$, ASe, OSe, Xf, bK, Yf, _K, _l, ls, H$, vK, SK, xK, wK, kK, EK, Jv, TK, PK, Xv, Qf, IK, RK, em, $K, vl, Sl, AK, xl, us, OK, wl, tm, rm, nm, CSe, om, im, sm, q$, Z$, V$, Yv, W$, kl, ds, K$, CK, am, MK, cm, DK, Qv, NK, lm, jK, UK, zK, LK, FK, BK, HK, qK, ZK, VK, um, WK, KK, dm, eS, tS, rS, GK, JK, XK, nS, YK, QK, eG, tG, rG, G$, pm, nG, fm, MSe, oG, ps, iG, DSe, El, sG, oS, aG, cG, lG, uG, dG, pG, fG, Kf, mG, gG, hG, Tl, iS, yG, bG, _G, vG, SG, xG, wG, kG, EG, TG, PG, IG, RG, $G, AG, OG, CG, MG, fs, DG, NG, jG, mm, UG, zG, LG, sS, FG, NSe, jSe, USe, zSe, LSe, FSe, H, Y$, eA, Q$, tA, rA, gm, sA, BG, HG, lS, dr, qG, Pl, yA, xA, wA, RA, $A, KG, GG, dS, XG, gS, mN, gN, vx, Sx, xx, _N, bN, vQ, Ex, Px, wQ, Xl, EN, IQ, _r, PN, IN, jQ, UQ, $N, AN, ON, CN, Vn, Rx, Ps, ZQ, VQ, WQ, JPe, GQ, Ax, XQ, NN, SIe, Is, UN, Ox, zN, ng, jN, YQ, wIe, Wn, LN, Ql, Rs, og, QQ, BN, $s, Ho, WIe, KIe, GIe, qo, eRe, eu, ZN, oee, VN, WN, see, aee, cee, KN, lee, uee, GN, tu, JN, XN, QN, ej, tj, ig, rj, bee, nj, _ee, vee, See, oj, wee, sg, ij, sj, aj, Pee, on, cj, lj, uj, dj, pj, mj, gj, hj, Mee, ag, Nee, Cx, jee, _j, vj, ru, nu, Kn, Sj, xj, wj, Mx, As, Fee, Bee, Tj, Pj, Ij, Rj, Hee, $j, u$e, ou, qee, Aj, b$e, _$e, Oj, iu, Cj, Mj, Zo, R$e, $$e, Os, Gn, Vee, Wee, Dj, Kee, Gee, Jee, Xee, Yee, Qee, Dx, ete, lg, A$e, tte, rte, zj, nte, ote, vr, Vo, Nj, jx, Ux, Lj, zx, ste, z$e, ate, cte, lte, ute, dte, Fj, Bj, pte, jj, fte, mte, Hj, gte, hte, Uj, yte, bte, qj, _te, Zj, vte, Ste, xte, su, Nx, Vj, wte, kte, Ete, Tte, Pte, L$e, Wj, Rte, $te, Ate, Ote, Cte, Mte, Dte, F$e, Nte, B$e, jte, au, ug, Xj, Yj, Q$e, eAe, dg, Zx, iU, Bte, SAe, Hte, pg, fg, qte, aU, Wo, cU, an, Zte, Vte, UAe, Gte, Xte, Kx, gre, Yn, CU, MU, DU, hg, Sre, LU, xre, wre, kre, zre;
 var init_sdk = __esm({
   "node_modules/@anthropic-ai/claude-agent-sdk/sdk.mjs"() {
+    init_import_meta_url_shim();
     import_node_module = require("node:module");
     import_child_process = require("child_process");
     import_crypto = require("crypto");
@@ -6654,7 +6665,6 @@ var init_sdk = __esm({
     import_path18 = require("path");
     import_child_process5 = require("child_process");
     import_fs8 = require("fs");
-    import_meta = {};
     yz = Object.create;
     ({ getPrototypeOf: bz, defineProperty: kg, getOwnPropertyNames: _z } = Object);
     vz = Object.prototype.hasOwnProperty;
@@ -6675,7 +6685,7 @@ var init_sdk = __esm({
     xr = (e, t) => {
       for (var r in t) kg(e, r, { get: t[r], enumerable: true, configurable: true, set: Ez.bind(t, r) });
     };
-    At = (0, import_node_module.createRequire)(import_meta.url);
+    At = (0, import_node_module.createRequire)(__forgeImportMetaUrl);
     Pz = Symbol.dispose || Symbol.for("Symbol.dispose");
     Iz = Symbol.asyncDispose || Symbol.for("Symbol.asyncDispose");
     _e = (e, t, r) => {
@@ -23858,12 +23868,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 });
 
 // src/entries/worker-run.ts
+init_import_meta_url_shim();
 var import_node_child_process = require("node:child_process");
 init_sdk();
 
 // src/store.ts
+init_import_meta_url_shim();
 var import_node_fs = __toESM(require("node:fs"), 1);
 var import_node_path3 = __toESM(require("node:path"), 1);
+
+// src/contracts.ts
+init_import_meta_url_shim();
+
+// node_modules/zod/index.js
+init_import_meta_url_shim();
 
 // node_modules/zod/v4/classic/external.js
 var external_exports = {};
@@ -24107,6 +24125,7 @@ __export(external_exports, {
   xid: () => xid2,
   xor: () => xor
 });
+init_import_meta_url_shim();
 
 // node_modules/zod/v4/core/index.js
 var core_exports2 = {};
@@ -24386,8 +24405,10 @@ __export(core_exports2, {
   util: () => util_exports,
   version: () => version
 });
+init_import_meta_url_shim();
 
 // node_modules/zod/v4/core/core.js
+init_import_meta_url_shim();
 var _a2;
 var NEVER = /* @__PURE__ */ Object.freeze({
   status: "aborted"
@@ -24464,6 +24485,12 @@ function config(newConfig) {
   return globalConfig;
 }
 
+// node_modules/zod/v4/core/parse.js
+init_import_meta_url_shim();
+
+// node_modules/zod/v4/core/errors.js
+init_import_meta_url_shim();
+
 // node_modules/zod/v4/core/util.js
 var util_exports = {};
 __export(util_exports, {
@@ -24531,6 +24558,7 @@ __export(util_exports, {
   uint8ArrayToHex: () => uint8ArrayToHex,
   unwrapMessage: () => unwrapMessage
 });
+init_import_meta_url_shim();
 function assertEqual(val) {
   return val;
 }
@@ -25387,6 +25415,12 @@ var _safeDecodeAsync = (_Err) => async (schema, value, _ctx) => {
 };
 var safeDecodeAsync = /* @__PURE__ */ _safeDecodeAsync($ZodRealError);
 
+// node_modules/zod/v4/core/schemas.js
+init_import_meta_url_shim();
+
+// node_modules/zod/v4/core/checks.js
+init_import_meta_url_shim();
+
 // node_modules/zod/v4/core/regexes.js
 var regexes_exports = {};
 __export(regexes_exports, {
@@ -25450,6 +25484,7 @@ __export(regexes_exports, {
   uuid7: () => uuid7,
   xid: () => xid
 });
+init_import_meta_url_shim();
 var cuid = /^[cC][0-9a-z]{6,}$/;
 var cuid2 = /^[0-9a-z]+$/;
 var ulid = /^[0-9A-HJKMNP-TV-Za-hjkmnp-tv-z]{26}$/;
@@ -26095,6 +26130,7 @@ var $ZodCheckOverwrite = /* @__PURE__ */ $constructor("$ZodCheckOverwrite", (ins
 });
 
 // node_modules/zod/v4/core/doc.js
+init_import_meta_url_shim();
 var Doc = class {
   constructor(args = []) {
     this.content = [];
@@ -26131,6 +26167,7 @@ var Doc = class {
 };
 
 // node_modules/zod/v4/core/versions.js
+init_import_meta_url_shim();
 var version = {
   major: 4,
   minor: 4,
@@ -28286,8 +28323,10 @@ __export(locales_exports, {
   zhCN: () => zh_CN_default,
   zhTW: () => zh_TW_default
 });
+init_import_meta_url_shim();
 
 // node_modules/zod/v4/locales/ar.js
+init_import_meta_url_shim();
 var error = () => {
   const Sizable = {
     string: { unit: "\u062D\u0631\u0641", verb: "\u0623\u0646 \u064A\u062D\u0648\u064A" },
@@ -28395,6 +28434,7 @@ function ar_default() {
 }
 
 // node_modules/zod/v4/locales/az.js
+init_import_meta_url_shim();
 var error2 = () => {
   const Sizable = {
     string: { unit: "simvol", verb: "olmal\u0131d\u0131r" },
@@ -28501,6 +28541,7 @@ function az_default() {
 }
 
 // node_modules/zod/v4/locales/be.js
+init_import_meta_url_shim();
 function getBelarusianPlural(count, one, few, many) {
   const absCount = Math.abs(count);
   const lastDigit = absCount % 10;
@@ -28658,6 +28699,7 @@ function be_default() {
 }
 
 // node_modules/zod/v4/locales/bg.js
+init_import_meta_url_shim();
 var error4 = () => {
   const Sizable = {
     string: { unit: "\u0441\u0438\u043C\u0432\u043E\u043B\u0430", verb: "\u0434\u0430 \u0441\u044A\u0434\u044A\u0440\u0436\u0430" },
@@ -28779,6 +28821,7 @@ function bg_default() {
 }
 
 // node_modules/zod/v4/locales/ca.js
+init_import_meta_url_shim();
 var error5 = () => {
   const Sizable = {
     string: { unit: "car\xE0cters", verb: "contenir" },
@@ -28887,6 +28930,7 @@ function ca_default() {
 }
 
 // node_modules/zod/v4/locales/cs.js
+init_import_meta_url_shim();
 var error6 = () => {
   const Sizable = {
     string: { unit: "znak\u016F", verb: "m\xEDt" },
@@ -28999,6 +29043,7 @@ function cs_default() {
 }
 
 // node_modules/zod/v4/locales/da.js
+init_import_meta_url_shim();
 var error7 = () => {
   const Sizable = {
     string: { unit: "tegn", verb: "havde" },
@@ -29115,6 +29160,7 @@ function da_default() {
 }
 
 // node_modules/zod/v4/locales/de.js
+init_import_meta_url_shim();
 var error8 = () => {
   const Sizable = {
     string: { unit: "Zeichen", verb: "zu haben" },
@@ -29224,6 +29270,7 @@ function de_default() {
 }
 
 // node_modules/zod/v4/locales/el.js
+init_import_meta_url_shim();
 var error9 = () => {
   const Sizable = {
     string: { unit: "\u03C7\u03B1\u03C1\u03B1\u03BA\u03C4\u03AE\u03C1\u03B5\u03C2", verb: "\u03BD\u03B1 \u03AD\u03C7\u03B5\u03B9" },
@@ -29334,6 +29381,7 @@ function el_default() {
 }
 
 // node_modules/zod/v4/locales/en.js
+init_import_meta_url_shim();
 var error10 = () => {
   const Sizable = {
     string: { unit: "characters", verb: "to have" },
@@ -29447,6 +29495,7 @@ function en_default() {
 }
 
 // node_modules/zod/v4/locales/eo.js
+init_import_meta_url_shim();
 var error11 = () => {
   const Sizable = {
     string: { unit: "karaktrojn", verb: "havi" },
@@ -29557,6 +29606,7 @@ function eo_default() {
 }
 
 // node_modules/zod/v4/locales/es.js
+init_import_meta_url_shim();
 var error12 = () => {
   const Sizable = {
     string: { unit: "caracteres", verb: "tener" },
@@ -29690,6 +29740,7 @@ function es_default() {
 }
 
 // node_modules/zod/v4/locales/fa.js
+init_import_meta_url_shim();
 var error13 = () => {
   const Sizable = {
     string: { unit: "\u06A9\u0627\u0631\u0627\u06A9\u062A\u0631", verb: "\u062F\u0627\u0634\u062A\u0647 \u0628\u0627\u0634\u062F" },
@@ -29805,6 +29856,7 @@ function fa_default() {
 }
 
 // node_modules/zod/v4/locales/fi.js
+init_import_meta_url_shim();
 var error14 = () => {
   const Sizable = {
     string: { unit: "merkki\xE4", subject: "merkkijonon" },
@@ -29918,6 +29970,7 @@ function fi_default() {
 }
 
 // node_modules/zod/v4/locales/fr.js
+init_import_meta_url_shim();
 var error15 = () => {
   const Sizable = {
     string: { unit: "caract\xE8res", verb: "avoir" },
@@ -30044,6 +30097,7 @@ function fr_default() {
 }
 
 // node_modules/zod/v4/locales/fr-CA.js
+init_import_meta_url_shim();
 var error16 = () => {
   const Sizable = {
     string: { unit: "caract\xE8res", verb: "avoir" },
@@ -30152,6 +30206,7 @@ function fr_CA_default() {
 }
 
 // node_modules/zod/v4/locales/he.js
+init_import_meta_url_shim();
 var error17 = () => {
   const TypeNames = {
     string: { label: "\u05DE\u05D7\u05E8\u05D5\u05D6\u05EA", gender: "f" },
@@ -30347,6 +30402,7 @@ function he_default() {
 }
 
 // node_modules/zod/v4/locales/hr.js
+init_import_meta_url_shim();
 var error18 = () => {
   const Sizable = {
     string: { unit: "znakova", verb: "imati" },
@@ -30470,6 +30526,7 @@ function hr_default() {
 }
 
 // node_modules/zod/v4/locales/hu.js
+init_import_meta_url_shim();
 var error19 = () => {
   const Sizable = {
     string: { unit: "karakter", verb: "legyen" },
@@ -30579,6 +30636,7 @@ function hu_default() {
 }
 
 // node_modules/zod/v4/locales/hy.js
+init_import_meta_url_shim();
 function getArmenianPlural(count, one, many) {
   return Math.abs(count) === 1 ? one : many;
 }
@@ -30727,6 +30785,7 @@ function hy_default() {
 }
 
 // node_modules/zod/v4/locales/id.js
+init_import_meta_url_shim();
 var error21 = () => {
   const Sizable = {
     string: { unit: "karakter", verb: "memiliki" },
@@ -30834,6 +30893,7 @@ function id_default() {
 }
 
 // node_modules/zod/v4/locales/is.js
+init_import_meta_url_shim();
 var error22 = () => {
   const Sizable = {
     string: { unit: "stafi", verb: "a\xF0 hafa" },
@@ -30944,6 +31004,7 @@ function is_default() {
 }
 
 // node_modules/zod/v4/locales/it.js
+init_import_meta_url_shim();
 var error23 = () => {
   const Sizable = {
     string: { unit: "caratteri", verb: "avere" },
@@ -31053,6 +31114,7 @@ function it_default() {
 }
 
 // node_modules/zod/v4/locales/ja.js
+init_import_meta_url_shim();
 var error24 = () => {
   const Sizable = {
     string: { unit: "\u6587\u5B57", verb: "\u3067\u3042\u308B" },
@@ -31161,6 +31223,7 @@ function ja_default() {
 }
 
 // node_modules/zod/v4/locales/ka.js
+init_import_meta_url_shim();
 var error25 = () => {
   const Sizable = {
     string: { unit: "\u10E1\u10D8\u10DB\u10D1\u10DD\u10DA\u10DD", verb: "\u10E3\u10DC\u10D3\u10D0 \u10E8\u10D4\u10D8\u10EA\u10D0\u10D5\u10D3\u10D4\u10E1" },
@@ -31273,7 +31336,11 @@ function ka_default() {
   };
 }
 
+// node_modules/zod/v4/locales/kh.js
+init_import_meta_url_shim();
+
 // node_modules/zod/v4/locales/km.js
+init_import_meta_url_shim();
 var error26 = () => {
   const Sizable = {
     string: { unit: "\u178F\u17BD\u17A2\u1780\u17D2\u179F\u179A", verb: "\u1782\u17BD\u179A\u1798\u17B6\u1793" },
@@ -31390,6 +31457,7 @@ function kh_default() {
 }
 
 // node_modules/zod/v4/locales/ko.js
+init_import_meta_url_shim();
 var error27 = () => {
   const Sizable = {
     string: { unit: "\uBB38\uC790", verb: "to have" },
@@ -31502,6 +31570,7 @@ function ko_default() {
 }
 
 // node_modules/zod/v4/locales/lt.js
+init_import_meta_url_shim();
 var capitalizeFirstCharacter = (text) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
@@ -31706,6 +31775,7 @@ function lt_default() {
 }
 
 // node_modules/zod/v4/locales/mk.js
+init_import_meta_url_shim();
 var error29 = () => {
   const Sizable = {
     string: { unit: "\u0437\u043D\u0430\u0446\u0438", verb: "\u0434\u0430 \u0438\u043C\u0430\u0430\u0442" },
@@ -31816,6 +31886,7 @@ function mk_default() {
 }
 
 // node_modules/zod/v4/locales/ms.js
+init_import_meta_url_shim();
 var error30 = () => {
   const Sizable = {
     string: { unit: "aksara", verb: "mempunyai" },
@@ -31924,6 +31995,7 @@ function ms_default() {
 }
 
 // node_modules/zod/v4/locales/nl.js
+init_import_meta_url_shim();
 var error31 = () => {
   const Sizable = {
     string: { unit: "tekens", verb: "heeft" },
@@ -32035,6 +32107,7 @@ function nl_default() {
 }
 
 // node_modules/zod/v4/locales/no.js
+init_import_meta_url_shim();
 var error32 = () => {
   const Sizable = {
     string: { unit: "tegn", verb: "\xE5 ha" },
@@ -32144,6 +32217,7 @@ function no_default() {
 }
 
 // node_modules/zod/v4/locales/ota.js
+init_import_meta_url_shim();
 var error33 = () => {
   const Sizable = {
     string: { unit: "harf", verb: "olmal\u0131d\u0131r" },
@@ -32254,6 +32328,7 @@ function ota_default() {
 }
 
 // node_modules/zod/v4/locales/ps.js
+init_import_meta_url_shim();
 var error34 = () => {
   const Sizable = {
     string: { unit: "\u062A\u0648\u06A9\u064A", verb: "\u0648\u0644\u0631\u064A" },
@@ -32369,6 +32444,7 @@ function ps_default() {
 }
 
 // node_modules/zod/v4/locales/pl.js
+init_import_meta_url_shim();
 var error35 = () => {
   const Sizable = {
     string: { unit: "znak\xF3w", verb: "mie\u0107" },
@@ -32479,6 +32555,7 @@ function pl_default() {
 }
 
 // node_modules/zod/v4/locales/pt.js
+init_import_meta_url_shim();
 var error36 = () => {
   const Sizable = {
     string: { unit: "caracteres", verb: "ter" },
@@ -32588,6 +32665,7 @@ function pt_default() {
 }
 
 // node_modules/zod/v4/locales/ro.js
+init_import_meta_url_shim();
 var error37 = () => {
   const Sizable = {
     string: { unit: "caractere", verb: "s\u0103 aib\u0103" },
@@ -32708,6 +32786,7 @@ function ro_default() {
 }
 
 // node_modules/zod/v4/locales/ru.js
+init_import_meta_url_shim();
 function getRussianPlural(count, one, few, many) {
   const absCount = Math.abs(count);
   const lastDigit = absCount % 10;
@@ -32865,6 +32944,7 @@ function ru_default() {
 }
 
 // node_modules/zod/v4/locales/sl.js
+init_import_meta_url_shim();
 var error39 = () => {
   const Sizable = {
     string: { unit: "znakov", verb: "imeti" },
@@ -32975,6 +33055,7 @@ function sl_default() {
 }
 
 // node_modules/zod/v4/locales/sv.js
+init_import_meta_url_shim();
 var error40 = () => {
   const Sizable = {
     string: { unit: "tecken", verb: "att ha" },
@@ -33086,6 +33167,7 @@ function sv_default() {
 }
 
 // node_modules/zod/v4/locales/ta.js
+init_import_meta_url_shim();
 var error41 = () => {
   const Sizable = {
     string: { unit: "\u0B8E\u0BB4\u0BC1\u0BA4\u0BCD\u0BA4\u0BC1\u0B95\u0BCD\u0B95\u0BB3\u0BCD", verb: "\u0B95\u0BCA\u0BA3\u0BCD\u0B9F\u0BBF\u0BB0\u0BC1\u0B95\u0BCD\u0B95 \u0BB5\u0BC7\u0BA3\u0BCD\u0B9F\u0BC1\u0BAE\u0BCD" },
@@ -33197,6 +33279,7 @@ function ta_default() {
 }
 
 // node_modules/zod/v4/locales/th.js
+init_import_meta_url_shim();
 var error42 = () => {
   const Sizable = {
     string: { unit: "\u0E15\u0E31\u0E27\u0E2D\u0E31\u0E01\u0E29\u0E23", verb: "\u0E04\u0E27\u0E23\u0E21\u0E35" },
@@ -33308,6 +33391,7 @@ function th_default() {
 }
 
 // node_modules/zod/v4/locales/tr.js
+init_import_meta_url_shim();
 var error43 = () => {
   const Sizable = {
     string: { unit: "karakter", verb: "olmal\u0131" },
@@ -33413,7 +33497,11 @@ function tr_default() {
   };
 }
 
+// node_modules/zod/v4/locales/ua.js
+init_import_meta_url_shim();
+
 // node_modules/zod/v4/locales/uk.js
+init_import_meta_url_shim();
 var error44 = () => {
   const Sizable = {
     string: { unit: "\u0441\u0438\u043C\u0432\u043E\u043B\u0456\u0432", verb: "\u043C\u0430\u0442\u0438\u043C\u0435" },
@@ -33528,6 +33616,7 @@ function ua_default() {
 }
 
 // node_modules/zod/v4/locales/ur.js
+init_import_meta_url_shim();
 var error45 = () => {
   const Sizable = {
     string: { unit: "\u062D\u0631\u0648\u0641", verb: "\u06C1\u0648\u0646\u0627" },
@@ -33639,6 +33728,7 @@ function ur_default() {
 }
 
 // node_modules/zod/v4/locales/uz.js
+init_import_meta_url_shim();
 var error46 = () => {
   const Sizable = {
     string: { unit: "belgi", verb: "bo\u2018lishi kerak" },
@@ -33750,6 +33840,7 @@ function uz_default() {
 }
 
 // node_modules/zod/v4/locales/vi.js
+init_import_meta_url_shim();
 var error47 = () => {
   const Sizable = {
     string: { unit: "k\xFD t\u1EF1", verb: "c\xF3" },
@@ -33859,6 +33950,7 @@ function vi_default() {
 }
 
 // node_modules/zod/v4/locales/zh-CN.js
+init_import_meta_url_shim();
 var error48 = () => {
   const Sizable = {
     string: { unit: "\u5B57\u7B26", verb: "\u5305\u542B" },
@@ -33969,6 +34061,7 @@ function zh_CN_default() {
 }
 
 // node_modules/zod/v4/locales/zh-TW.js
+init_import_meta_url_shim();
 var error49 = () => {
   const Sizable = {
     string: { unit: "\u5B57\u5143", verb: "\u64C1\u6709" },
@@ -34077,6 +34170,7 @@ function zh_TW_default() {
 }
 
 // node_modules/zod/v4/locales/yo.js
+init_import_meta_url_shim();
 var error50 = () => {
   const Sizable = {
     string: { unit: "\xE0mi", verb: "n\xED" },
@@ -34185,6 +34279,7 @@ function yo_default() {
 }
 
 // node_modules/zod/v4/core/registries.js
+init_import_meta_url_shim();
 var _a3;
 var $output = Symbol("ZodOutput");
 var $input = Symbol("ZodInput");
@@ -34235,6 +34330,7 @@ function registry() {
 var globalRegistry = globalThis.__zod_globalRegistry;
 
 // node_modules/zod/v4/core/api.js
+init_import_meta_url_shim();
 // @__NO_SIDE_EFFECTS__
 function _string(Class2, params) {
   return new Class2({
@@ -35274,6 +35370,7 @@ function _stringFormat(Class2, format, fnOrRegex, _params = {}) {
 }
 
 // node_modules/zod/v4/core/to-json-schema.js
+init_import_meta_url_shim();
 function initializeContext(params) {
   let target = params?.target ?? "draft-2020-12";
   if (target === "draft-4")
@@ -35633,6 +35730,7 @@ var createStandardJSONSchemaMethod = (schema, io2, processors = {}) => (params) 
 };
 
 // node_modules/zod/v4/core/json-schema-processors.js
+init_import_meta_url_shim();
 var formatMap = {
   guid: "uuid",
   url: "uri",
@@ -36177,6 +36275,7 @@ function toJSONSchema(input, params) {
 }
 
 // node_modules/zod/v4/core/json-schema-generator.js
+init_import_meta_url_shim();
 var JSONSchemaGenerator = class {
   /** @deprecated Access via ctx instead */
   get metadataRegistry() {
@@ -36253,6 +36352,7 @@ var JSONSchemaGenerator = class {
 
 // node_modules/zod/v4/core/json-schema.js
 var json_schema_exports = {};
+init_import_meta_url_shim();
 
 // node_modules/zod/v4/classic/schemas.js
 var schemas_exports2 = {};
@@ -36424,6 +36524,7 @@ __export(schemas_exports2, {
   xid: () => xid2,
   xor: () => xor
 });
+init_import_meta_url_shim();
 
 // node_modules/zod/v4/classic/checks.js
 var checks_exports2 = {};
@@ -36458,6 +36559,7 @@ __export(checks_exports2, {
   trim: () => _trim,
   uppercase: () => _uppercase
 });
+init_import_meta_url_shim();
 
 // node_modules/zod/v4/classic/iso.js
 var iso_exports = {};
@@ -36471,6 +36573,7 @@ __export(iso_exports, {
   duration: () => duration2,
   time: () => time2
 });
+init_import_meta_url_shim();
 var ZodISODateTime = /* @__PURE__ */ $constructor("ZodISODateTime", (inst, def) => {
   $ZodISODateTime.init(inst, def);
   ZodStringFormat.init(inst, def);
@@ -36500,7 +36603,11 @@ function duration2(params) {
   return _isoDuration(ZodISODuration, params);
 }
 
+// node_modules/zod/v4/classic/parse.js
+init_import_meta_url_shim();
+
 // node_modules/zod/v4/classic/errors.js
+init_import_meta_url_shim();
 var initializer2 = (inst, issues) => {
   $ZodError.init(inst, issues);
   inst.name = "ZodError";
@@ -37845,6 +37952,7 @@ function preprocess(fn2, schema) {
 }
 
 // node_modules/zod/v4/classic/compat.js
+init_import_meta_url_shim();
 var ZodIssueCode = {
   invalid_type: "invalid_type",
   too_big: "too_big",
@@ -37871,6 +37979,7 @@ var ZodFirstPartyTypeKind;
 })(ZodFirstPartyTypeKind || (ZodFirstPartyTypeKind = {}));
 
 // node_modules/zod/v4/classic/from-json-schema.js
+init_import_meta_url_shim();
 var z3 = {
   ...schemas_exports2,
   ...checks_exports2,
@@ -38359,6 +38468,7 @@ __export(coerce_exports, {
   number: () => number3,
   string: () => string3
 });
+init_import_meta_url_shim();
 function string3(params) {
   return _coercedString(ZodString, params);
 }
@@ -38421,6 +38531,7 @@ var SessionMeta = external_exports.object({
 });
 
 // src/paths.ts
+init_import_meta_url_shim();
 var import_node_os2 = __toESM(require("node:os"), 1);
 var import_node_path2 = __toESM(require("node:path"), 1);
 function forgeHome() {
@@ -38486,7 +38597,11 @@ ${result.followups.map((f) => `- ${f}`).join("\n")}` : ""
   import_node_fs.default.writeFileSync(import_node_path3.default.join(workerDir(workerId2), "result.md"), md2);
 }
 
+// src/runner.ts
+init_import_meta_url_shim();
+
 // src/session-reader.ts
+init_import_meta_url_shim();
 function extractText(content) {
   if (typeof content === "string") return content;
   if (Array.isArray(content)) {
@@ -38594,6 +38709,15 @@ if (!spec) {
   console.error(`no spec for worker ${workerId}`);
   process.exit(2);
 }
+function resolveClaudeExecutable() {
+  if (process.env.CLAUDE_CODE_PATH) return process.env.CLAUDE_CODE_PATH;
+  try {
+    return (0, import_node_child_process.execFileSync)("/bin/sh", ["-c", "command -v claude"], { encoding: "utf8" }).trim() || void 0;
+  } catch {
+    return void 0;
+  }
+}
+var pathToClaudeCodeExecutable = resolveClaudeExecutable();
 var deps = {
   queryFn: (s, prompt) => uCe({
     prompt,
@@ -38603,6 +38727,7 @@ var deps = {
       cwd: s.cwd,
       permissionMode: s.permissionMode,
       maxTurns: s.maxTurns,
+      ...pathToClaudeCodeExecutable ? { pathToClaudeCodeExecutable } : {},
       ...s.model ? { model: s.model } : {}
     }
   }),
