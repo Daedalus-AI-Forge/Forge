@@ -1,0 +1,39 @@
+# Public repo: track only README.md, LICENSE, core/, and plugin/.
+# Everything else (docs/, CLAUDE.md, .claude/, etc.) stays local — never pushed
+# to the Daedalus-AI-Forge repo.
+
+# 1) Ignore everything at the repo root...
+/*
+
+# 2) ...except these (whitelist; contents of the folders are tracked):
+!/.gitignore
+!/README.md
+!/LICENSE
+!/core/
+!/plugin/
+
+# 3) Keep Claude project files and docs local, even inside tracked dirs.
+CLAUDE.md
+.claude/
+docs/
+
+# 4) Never commit build / venv / cache junk inside the tracked dirs.
+**/venv/
+**/.venv/
+**/__pycache__/
+**/*.py[cod]
+**/*.egg-info/
+**/dist/
+**/build/
+**/node_modules/
+.DS_Store
+
+# 5) Secrets & local-only runtime files.
+**/.env
+**/.env.*
+!**/.env.example
+**/*.pem
+**/*.key
+**/*.sqlite
+**/*.sqlite3
+**/*.db
