@@ -104,4 +104,12 @@ describe('runWorker', () => {
     }))
     expect(readStatus('w1')!.state).toBe('done')
   })
+
+  it('failure contract still captures git diff stat', async () => {
+    await runWorker(spec, deps([], {
+      queryFn: async function* () { throw new Error('boom') },
+      gitDiffStat: () => ' 2 files changed',
+    }))
+    expect(readResult('w1')!.diffs).toBe(' 2 files changed')
+  })
 })

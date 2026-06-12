@@ -2,6 +2,7 @@ import { listSessions, searchSessions, inspectSession, type Scope } from './sess
 import { spawnWorker, type SpawnDeps, type SpawnRequest } from './spawner.js'
 import {
   listWorkerIds, readSpec, readStatus, readResult, markMerged, pendingResults, isStale,
+  reapStaleWorkers,
 } from './store.js'
 
 export function listSessionsTool(args: { scope?: Scope; cwd?: string; limit?: number }) {
@@ -46,6 +47,7 @@ export function workerStatusTool(args: { workerId?: string }) {
 }
 
 export function getResultsTool(args: { workerId?: string; cwd?: string; consumerId?: string }) {
+  reapStaleWorkers()   // covers SessionStart hook + pending pulls
   const consumerId = args.consumerId ?? `live:${args.cwd ?? process.cwd()}`
   if (args.workerId && args.workerId !== 'pending') {
     const result = readResult(args.workerId)

@@ -82,10 +82,35 @@ export function isStale(status: WorkerStatus, now = new Date()): boolean {
     now.getTime() - new Date(status.heartbeatAt).getTime() > STALE_MS
 }
 
+/** Stale running worker whose pid is dead (or unknown): synthesize a failure contract
+ *  so it re-enters the merge pipeline. PID liveness matters: a worker inside a long
+ *  tool call legitimately stops heartbeating, so a live pid is never reaped. */
+export function reapStaleWorkers(now = new Date()): string[] {
+  const reaped: string[] = []
+  for (const id of listWorkerIds()) {
+    const spec = readSpec(id); const status = readStatus(id)
+    if (!spec || !status || !isStale(status, now) || readResult(id)) continue
+    if (status.pid !== undefined && pidAlive(status.pid)) continue
+    writeResult(id, ResultContract.parse({
+      worker: spec.workerName, sourceSession: spec.sourceSessionId, task: spec.taskPrompt,
+      outcome: 'failed',
+      summary: `Worker went stale: no heartbeat since ${status.heartbeatAt} and its process is gone. It may have been killed (OOM, reboot, manual kill). Check artifacts on disk; the task may be partially done.`,
+    }))
+    writeStatus({ ...status, state: 'failed', heartbeatAt: now.toISOString() })
+    reaped.push(id)
+  }
+  return reaped
+}
+
+function pidAlive(pid: number): boolean {
+  try { process.kill(pid, 0); return true } catch { return false }
+}
+
 export interface PendingItem { spec: WorkerSpec; result: ResultContract; status: WorkerStatus }
 
 /** Finished results for this cwd not yet seen by this consumer session. */
 export function pendingResults(cwd: string, consumerSessionId: string): PendingItem[] {
+  reapStaleWorkers()   // covers SessionStart hook + pending pulls
   const out: PendingItem[] = []
   for (const id of listWorkerIds()) {
     const spec = readSpec(id); const status = readStatus(id); const result = readResult(id)

@@ -60,6 +60,16 @@ describe('tools', () => {
     expect(s.workers[0].stale).toBe(true)
   })
 
+  it('getResults surfaces a reaped stale worker by id', () => {
+    writeSpec({ workerId: 'w9', workerName: 'forge-worker: w9', sourceSessionId: 's',
+      taskPrompt: 't', cwd: FIXTURE_CWD, maxTurns: 50, permissionMode: 'acceptEdits',
+      createdAt: '2026-06-12T00:00:00Z' })
+    writeStatus({ workerId: 'w9', state: 'running', heartbeatAt: '2026-06-12T00:00:00Z', turns: 1, pid: 999999 })
+    const out = getResultsTool({ workerId: 'w9', cwd: FIXTURE_CWD, consumerId: 'live:test' })
+    expect(out.results.length).toBe(1)
+    expect(out.results[0].outcome).toBe('failed')
+  })
+
   it('getResults pending: returns contracts and marks merged', () => {
     seedFinishedWorker('w1', FIXTURE_CWD)
     const out = getResultsTool({ workerId: 'pending', cwd: FIXTURE_CWD, consumerId: 'live:test' })

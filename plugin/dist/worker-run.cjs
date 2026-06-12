@@ -38542,6 +38542,11 @@ async function runWorker(spec2, deps2) {
     writeResult(spec2.workerId, contract);
     heartbeat("done");
   } catch (err) {
+    let diffs;
+    try {
+      diffs = deps2.gitDiffStat(spec2.cwd);
+    } catch {
+    }
     writeResult(spec2.workerId, ResultContract.parse({
       worker: spec2.workerName,
       sourceSession: spec2.sourceSessionId,
@@ -38549,7 +38554,8 @@ async function runWorker(spec2, deps2) {
       outcome: "failed",
       summary: `Worker crashed: ${err instanceof Error ? err.message : String(err)}` + (lastAssistantText ? `
 Last activity:
-${lastAssistantText.slice(0, 1e3)}` : "")
+${lastAssistantText.slice(0, 1e3)}` : ""),
+      diffs
     }));
     heartbeat("failed");
   }

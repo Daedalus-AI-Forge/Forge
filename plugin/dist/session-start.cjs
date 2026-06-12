@@ -14600,6 +14600,7 @@ function workerDir(workerId) {
 }
 
 // src/store.ts
+var STALE_MS = 12e4;
 function atomicWriteJson(file2, value) {
   import_node_fs.default.mkdirSync(import_node_path2.default.dirname(file2), { recursive: true });
   const tmp = `${file2}.tmp-${process.pid}-${Date.now()}`;
@@ -14616,8 +14617,43 @@ function readJson(schema, file2) {
 function readSpec(workerId) {
   return readJson(WorkerSpec, import_node_path2.default.join(workerDir(workerId), "spec.json"));
 }
+function writeStatus(status) {
+  atomicWriteJson(import_node_path2.default.join(workerDir(status.workerId), "status.json"), status);
+}
 function readStatus(workerId) {
   return readJson(WorkerStatus, import_node_path2.default.join(workerDir(workerId), "status.json"));
+}
+function writeResult(workerId, result) {
+  atomicWriteJson(import_node_path2.default.join(workerDir(workerId), "result.json"), result);
+  const md = [
+    `# ${result.worker}`,
+    `- **Outcome:** ${result.outcome}`,
+    `- **Source session:** ${result.sourceSession}`,
+    `- **Task:** ${result.task}`,
+    `
+## Summary
+
+${result.summary}`,
+    result.decisions.length ? `
+## Decisions
+
+${result.decisions.map((d) => `- ${d}`).join("\n")}` : "",
+    result.artifacts.length ? `
+## Artifacts
+
+${result.artifacts.map((a) => `- ${a}`).join("\n")}` : "",
+    result.diffs ? `
+## Diffs
+
+\`\`\`
+${result.diffs}
+\`\`\`` : "",
+    result.followups.length ? `
+## Follow-ups
+
+${result.followups.map((f) => `- ${f}`).join("\n")}` : ""
+  ].filter(Boolean).join("\n");
+  import_node_fs.default.writeFileSync(import_node_path2.default.join(workerDir(workerId), "result.md"), md);
 }
 function readResult(workerId) {
   return readJson(ResultContract, import_node_path2.default.join(workerDir(workerId), "result.json"));
@@ -14643,7 +14679,38 @@ function markMerged(workerId, consumerSessionId) {
     atomicWriteJson(import_node_path2.default.join(workerDir(workerId), "merged.json"), [...seen, consumerSessionId]);
   }
 }
+function isStale(status, now = /* @__PURE__ */ new Date()) {
+  return status.state === "running" && now.getTime() - new Date(status.heartbeatAt).getTime() > STALE_MS;
+}
+function reapStaleWorkers(now = /* @__PURE__ */ new Date()) {
+  const reaped = [];
+  for (const id of listWorkerIds()) {
+    const spec = readSpec(id);
+    const status = readStatus(id);
+    if (!spec || !status || !isStale(status, now) || readResult(id)) continue;
+    if (status.pid !== void 0 && pidAlive(status.pid)) continue;
+    writeResult(id, ResultContract.parse({
+      worker: spec.workerName,
+      sourceSession: spec.sourceSessionId,
+      task: spec.taskPrompt,
+      outcome: "failed",
+      summary: `Worker went stale: no heartbeat since ${status.heartbeatAt} and its process is gone. It may have been killed (OOM, reboot, manual kill). Check artifacts on disk; the task may be partially done.`
+    }));
+    writeStatus({ ...status, state: "failed", heartbeatAt: now.toISOString() });
+    reaped.push(id);
+  }
+  return reaped;
+}
+function pidAlive(pid) {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch {
+    return false;
+  }
+}
 function pendingResults(cwd, consumerSessionId) {
+  reapStaleWorkers();
   const out = [];
   for (const id of listWorkerIds()) {
     const spec = readSpec(id);

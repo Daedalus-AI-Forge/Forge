@@ -4,7 +4,7 @@ import os from 'node:os'
 import path from 'node:path'
 import {
   writeSpec, readSpec, writeStatus, readStatus, writeResult, readResult,
-  listWorkerIds, markMerged, readMerged, pendingResults, isStale,
+  listWorkerIds, markMerged, readMerged, pendingResults, isStale, reapStaleWorkers,
 } from '../src/store.js'
 import type { WorkerSpec, WorkerStatus, ResultContract } from '../src/contracts.js'
 
@@ -65,6 +65,24 @@ describe('store', () => {
     const old: WorkerStatus = { ...status('w1', 'running'), heartbeatAt: '2026-06-12T00:00:00Z' }
     expect(isStale(old, new Date('2026-06-12T00:05:00Z'))).toBe(true)
     expect(isStale(status('w1', 'running'), new Date())).toBe(false)
+  })
+
+  it('reapStaleWorkers synthesizes failure contracts for dead stale workers', () => {
+    writeSpec(spec('w1'))
+    writeStatus({ workerId: 'w1', state: 'running', heartbeatAt: '2026-06-12T00:00:00Z', turns: 1, pid: 999999 })
+    const pending = pendingResults('/tmp/projA', 'sess-X')   // triggers reap
+    expect(pending.length).toBe(1)
+    expect(pending[0].result.outcome).toBe('failed')
+    expect(pending[0].result.summary).toContain('stale')
+    expect(readStatus('w1')!.state).toBe('failed')
+  })
+
+  it('reapStaleWorkers spares stale-looking workers whose pid is alive', () => {
+    writeSpec(spec('w1'))
+    writeStatus({ workerId: 'w1', state: 'running', heartbeatAt: '2026-06-12T00:00:00Z', turns: 1, pid: process.pid })
+    expect(reapStaleWorkers()).toEqual([])
+    expect(pendingResults('/tmp/projA', 'sess-X')).toEqual([])
+    expect(readStatus('w1')!.state).toBe('running')
   })
 
   it('readers return null on missing/corrupt files', () => {

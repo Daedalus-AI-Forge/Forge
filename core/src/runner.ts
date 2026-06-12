@@ -49,11 +49,14 @@ export async function runWorker(spec: WorkerSpec, deps: RunnerDeps): Promise<voi
     writeResult(spec.workerId, contract)
     heartbeat('done')
   } catch (err) {
+    let diffs: string | undefined
+    try { diffs = deps.gitDiffStat(spec.cwd) } catch { /* keep original failure */ }
     writeResult(spec.workerId, ResultContract.parse({
       worker: spec.workerName, sourceSession: spec.sourceSessionId, task: spec.taskPrompt,
       outcome: 'failed',
       summary: `Worker crashed: ${err instanceof Error ? err.message : String(err)}` +
         (lastAssistantText ? `\nLast activity:\n${lastAssistantText.slice(0, 1000)}` : ''),
+      diffs,
     }))
     heartbeat('failed')
   }
