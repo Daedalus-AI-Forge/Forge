@@ -12,6 +12,7 @@
 !/core/
 !/plugin/
 !/.claude-plugin/
+!/.github/
 
 # 3) Keep Claude project files and docs local, even inside tracked dirs.
 CLAUDE.md
