@@ -27,6 +27,24 @@ The plugin ships three skills that form a look-up → hand-off → catch-up flow
 
 A typical loop: use `/forge:lookup` to pin down the session ID, `/forge:handoff` to spin up a worker that continues that work in the background, and `/forge:catchup` once it finishes to fold its summary and artifacts into what you're doing now.
 
+## Updating
+
+When a new version is published, refresh the marketplace and update the plugin from inside Claude Code:
+
+```
+/plugin marketplace update forge
+/plugin update forge@forge
+```
+
+Or open `/plugin`, switch to the **Installed** tab, select **forge**, and choose **Update**.
+
+If an update doesn't appear, clear the cached marketplace and re-add it:
+
+```
+/plugin marketplace remove forge
+/plugin marketplace add https://github.com/Daedalus-AI-Forge/Forge
+```
+
 ## Layout
 
 - `core/` — main implementation
