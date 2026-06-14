@@ -45,6 +45,20 @@ describe('extractContract', () => {
     expect(r.outcome).toBe('partial')
     expect(r.summary).toContain('forgot the format')
   })
+
+  it('recovers the contract when prose has a stray brace before the JSON block', () => {
+    const r = extractContract(spec,
+      'I used `{x}` syntax in the template.\n```json\n{"outcome":"completed","summary":"all done"}\n```')
+    expect(r.outcome).toBe('completed')
+    expect(r.summary).toBe('all done')
+  })
+
+  it('uses the real (last) contract when the message contains two JSON objects', () => {
+    const r = extractContract(spec,
+      '{"note":"scratch object"}\nFinal result:\n{"outcome":"completed","summary":"the real one"}')
+    expect(r.outcome).toBe('completed')
+    expect(r.summary).toBe('the real one')
+  })
 })
 
 function deps(messages: any[], overrides: Partial<RunnerDeps> = {}): RunnerDeps {
