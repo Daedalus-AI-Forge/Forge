@@ -62,6 +62,38 @@ export async function runWorker(spec: WorkerSpec, deps: RunnerDeps): Promise<voi
   }
 }
 
+/** Contents of ```json (or plain ```) fenced code blocks, in order of appearance. */
+function fencedJsonBlocks(text: string): string[] {
+  const blocks: string[] = []
+  const re = /```(?:json)?\s*\n?([\s\S]*?)```/gi
+  let m: RegExpExecArray | null
+  while ((m = re.exec(text)) !== null) blocks.push(m[1].trim())
+  return blocks
+}
+
+/** Every complete top-level {...} object in the text, in order of appearance.
+ *  Tracks string literals so braces inside JSON values don't throw off the count. */
+function balancedObjects(text: string): string[] {
+  const objects: string[] = []
+  let depth = 0, start = -1, inString = false, escaped = false
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i]
+    if (inString) {
+      if (escaped) escaped = false
+      else if (ch === '\\') escaped = true
+      else if (ch === '"') inString = false
+      continue
+    }
+    if (ch === '"') { inString = true; continue }
+    if (ch === '{') { if (depth === 0) start = i; depth++ }
+    else if (ch === '}' && depth > 0) {
+      depth--
+      if (depth === 0 && start >= 0) { objects.push(text.slice(start, i + 1)); start = -1 }
+    }
+  }
+  return objects
+}
+
 /** Parse the worker's final message into a ResultContract; never throws. */
 export function extractContract(spec: WorkerSpec, finalText: string): ResultContract {
   const identity = {
@@ -69,13 +101,20 @@ export function extractContract(spec: WorkerSpec, finalText: string): ResultCont
     sourceSession: spec.sourceSessionId,
     task: spec.taskPrompt,
   }
+  // Try the most reliable shapes first: fenced JSON blocks, then the LAST
+  // balanced-brace object (the real contract usually comes last), and finally
+  // the original first-brace/last-brace slice as a last resort.
+  const candidates: string[] = []
+  for (const block of fencedJsonBlocks(finalText)) candidates.push(block, ...balancedObjects(block))
+  candidates.push(...balancedObjects(finalText).reverse())
   const start = finalText.indexOf('{')
   const end = finalText.lastIndexOf('}')
-  if (start >= 0 && end > start) {
+  if (start >= 0 && end > start) candidates.push(finalText.slice(start, end + 1))
+
+  for (const candidate of candidates) {
     try {
-      const parsed = JSON.parse(finalText.slice(start, end + 1))
-      return ResultContract.parse({ ...identity, ...parsed })
-    } catch { /* fall through */ }
+      return ResultContract.parse({ ...identity, ...JSON.parse(candidate) })
+    } catch { /* try the next candidate */ }
   }
   return ResultContract.parse({
     ...identity,
