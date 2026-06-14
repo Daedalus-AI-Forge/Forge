@@ -2,7 +2,7 @@
 
 A project under the [Daedalus-AI-Forge](https://github.com/Daedalus-AI-Forge) org.
 
-Forge is a Claude Code plugin that lets you discover previous sessions, fork them into named background workers, and merge their results back into your current session.
+Forge is a Claude Code plugin that lets you look up previous sessions, hand them off to named background workers, and catch up on their results in your current session.
 
 ## Install
 
@@ -17,15 +17,15 @@ You can also pass a local clone path to `/plugin marketplace add` instead of the
 
 ## Quickstart
 
-The plugin ships three skills that form a discover → fork → merge flow: find an earlier session, fork its context into a background worker, then pull the worker's results back into your current session.
+The plugin ships three skills that form a look-up → hand-off → catch-up flow: find an earlier session, hand its context off to a background worker, then catch up on the worker's results in your current session.
 
 ```
-/forge:discover   # find the previous session you mean ("the session where we…")
-/forge:fork       # fork that session's context into a named background worker
-/forge:merge      # merge finished workers' results back into this session
+/forge:lookup    # look up the previous session you mean ("the one where we…")
+/forge:handoff   # hand that session's context off to a named background worker
+/forge:catchup   # catch up on finished workers' results in this session
 ```
 
-A typical loop: use `/forge:discover` to pin down the session ID, `/forge:fork` to spin up a worker that continues that work in the background, and `/forge:merge` once it finishes to fold its summary and artifacts into what you're doing now.
+A typical loop: use `/forge:lookup` to pin down the session ID, `/forge:handoff` to spin up a worker that continues that work in the background, and `/forge:catchup` once it finishes to fold its summary and artifacts into what you're doing now.
 
 ## Layout
 
