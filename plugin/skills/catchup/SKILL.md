@@ -1,12 +1,12 @@
 ---
-name: merge
-description: Use when checking on or consuming background worker results — "what did the worker find", "merge the worker's results", before final summaries, or after a SessionStart digest mentions finished workers.
+name: catchup
+description: Use when catching up on background worker results — "what did the worker find", "catch me up on the worker", "pull the worker's results in", before final summaries, or after a SessionStart digest mentions finished workers.
 ---
 
-# Merge worker results into this session
+# Catch up on worker results
 
 1. Call `forge_get_results` — with a `workerId` for one worker, or no argument for **all pending results in this project**. Pulled results are marked merged (you won't see duplicates).
-2. Treat the contract as a teammate's handoff:
+2. Treat the contract as a colleague's handoff back to you:
    - `summary` — fold the relevant facts into your current work.
    - `decisions` — respect them or flag conflicts to the user explicitly.
    - `artifacts` — read changed files before building on them.
