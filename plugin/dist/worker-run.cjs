@@ -38675,18 +38675,56 @@ ${lastAssistantText.slice(0, 1e3)}` : ""),
     heartbeat("failed");
   }
 }
+function fencedJsonBlocks(text) {
+  const blocks = [];
+  const re2 = /```(?:json)?\s*\n?([\s\S]*?)```/gi;
+  let m;
+  while ((m = re2.exec(text)) !== null) blocks.push(m[1].trim());
+  return blocks;
+}
+function balancedObjects(text) {
+  const objects = [];
+  let depth = 0, start = -1, inString = false, escaped = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch2 = text[i];
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (ch2 === "\\") escaped = true;
+      else if (ch2 === '"') inString = false;
+      continue;
+    }
+    if (ch2 === '"') {
+      inString = true;
+      continue;
+    }
+    if (ch2 === "{") {
+      if (depth === 0) start = i;
+      depth++;
+    } else if (ch2 === "}" && depth > 0) {
+      depth--;
+      if (depth === 0 && start >= 0) {
+        objects.push(text.slice(start, i + 1));
+        start = -1;
+      }
+    }
+  }
+  return objects;
+}
 function extractContract(spec2, finalText) {
   const identity = {
     worker: spec2.workerName,
     sourceSession: spec2.sourceSessionId,
     task: spec2.taskPrompt
   };
+  const candidates = [];
+  for (const block of fencedJsonBlocks(finalText)) candidates.push(block, ...balancedObjects(block));
+  candidates.push(...balancedObjects(finalText).reverse());
   const start = finalText.indexOf("{");
   const end = finalText.lastIndexOf("}");
-  if (start >= 0 && end > start) {
+  if (start >= 0 && end > start) candidates.push(finalText.slice(start, end + 1));
+  for (const candidate of candidates) {
     try {
-      const parsed = JSON.parse(finalText.slice(start, end + 1));
-      return ResultContract.parse({ ...identity, ...parsed });
+      return ResultContract.parse({ ...identity, ...JSON.parse(candidate) });
     } catch {
     }
   }
